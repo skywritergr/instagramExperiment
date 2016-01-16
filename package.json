@@ -1,0 +1,30 @@
+{
+  "name": "instagram-bot",
+  "version": "1.0.0",
+  "description": "An automation bot to like, comment and post pictures on instagram. All based on hashtags",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/skywritergr/instagramExperiment.git"
+  },
+  "author": "George Stefanis",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/skywritergr/instagramExperiment/issues"
+  },
+  "homepage": "https://github.com/skywritergr/instagramExperiment#readme",
+  "dependencies": {
+    "babel-preset-react": "^6.3.13",
+    "bootstrap": "^4.0.0-alpha.2",
+    "react": "^0.14.6",
+    "react-dom": "^0.14.6",
+    "react-router": "^1.0.3"
+  },
+  "devDependencies": {
+    "jshint": "^2.9.1",
+    "webpack": "^1.12.11"
+  }
+}

@@ -1,6 +1,6 @@
 import os
 # import json
-from flask import Flask, Response, request, jsonify
+from flask import Flask, Response, request, jsonify, send_from_directory
 from instagram.client import InstagramAPI
 
 app = Flask(__name__, static_url_path='', static_folder='public')
@@ -17,6 +17,9 @@ CONFIG = {
 }
 instagram_client = InstagramAPI(**CONFIG)
 
+@app.route('/node_modules/<path:filename>')
+def serve_node(filename):
+    return send_from_directory('node_modules', filename, as_attachment=True)
 
 @app.route('/get_url')
 def auth_instagram():
