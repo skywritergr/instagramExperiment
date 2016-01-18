@@ -39,7 +39,7 @@ def get_nav():
     return nav_menu
 
 
-@app.route('/handle_auth')
+@app.route('/post_auth')
 def on_success():
     code = request.args.get("code")
     if not code:
