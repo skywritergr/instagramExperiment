@@ -17,14 +17,24 @@
   },
   "homepage": "https://github.com/skywritergr/instagramExperiment#readme",
   "dependencies": {
-    "babel-preset-react": "^6.3.13",
+    "babel-polyfill": "^6.3.14",
+    "babel-runtime": "^6.3.19",
     "bootstrap": "^4.0.0-alpha.2",
+    "history": "^1.17.0",
     "react": "^0.14.6",
     "react-dom": "^0.14.6",
-    "react-router": "^1.0.3"
+    "react-router": "^1.0.3",
+    "superagent": "^1.6.1"
   },
   "devDependencies": {
+    "babel-core": "^6.4.0",
+    "babel-loader": "^6.2.1",
+    "babel-plugin-transform-runtime": "^6.4.3",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
+    "babel-preset-stage-0": "^6.3.13",
     "jshint": "^2.9.1",
+    "require-dir": "^0.3.0",
     "webpack": "^1.12.11"
   }
 }

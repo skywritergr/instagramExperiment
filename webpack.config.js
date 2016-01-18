@@ -1,7 +1,8 @@
 var webpack = require('webpack');
+var path = require('path');
 
 module.exports = {
-    entry: './public/js/main.jsx',
+    entry: ['./public/js/main.jsx', 'babel-polyfill'],
     output: {
         // Output the bundled file.
         path: './public/build',
@@ -13,7 +14,7 @@ module.exports = {
             // Test for js or jsx files.
             test: /\.jsx?$/,
             exclude: /node_modules/,
-            loader: 'babel'
+            loader: 'babel-loader'
         }]
     },
     externals: {
