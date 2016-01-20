@@ -13,7 +13,7 @@ app.add_url_rule('/', 'root', lambda: app.send_static_file('index.html'))
 CONFIG = {
     'client_id': 'ad842c2390844f0581e5b178c410741a',
     'client_secret': '9d94784498f5489db11f2281a5248dc6',
-    'redirect_uri': 'http://46.101.29.114:7000/handle_auth'
+    'redirect_uri': 'http://46.101.29.114:7000/#/handle_auth'
 }
 instagram_client = InstagramAPI(**CONFIG)
 
