@@ -4,8 +4,7 @@ class App extends React.Component{
     render(){
         return (
             <div>
-                <h2>hello there!!</h2>
-                <LoginButton />
+                {this.props.children || <LoginButton />}
             </div>   
         );
     };
