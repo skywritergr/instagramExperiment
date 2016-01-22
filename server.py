@@ -9,6 +9,7 @@ app.config.update(
 )
 app.add_url_rule('/', 'root', lambda: app.send_static_file('index.html'))
 
+access_token = ""
 
 CONFIG = {
     'client_id': 'ad842c2390844f0581e5b178c410741a',
@@ -17,9 +18,16 @@ CONFIG = {
 }
 instagram_client = InstagramAPI(**CONFIG)
 
+
+@app.route('/handleauth')
+def handleauth():
+        return send_from_directory('public', 'index.html')
+
+
 @app.route('/node_modules/<path:filename>')
 def serve_node(filename):
     return send_from_directory('node_modules', filename, as_attachment=True)
+
 
 @app.route('/get_url')
 def auth_instagram():
@@ -49,10 +57,11 @@ def on_success():
         print(access_token)
         if not access_token:
             return "could not get access token"
-        request.session['access_token'] = access_token
+        access_token = access_token
+        return jsonify(access_token=access_token, user_info=user_info)
     except Exception as e:
         print(e)
-    return get_nav()
+        return jsonify(error=True)
 
 
 @app.route('/api/hashtag', methods=['GET'])
