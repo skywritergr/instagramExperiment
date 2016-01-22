@@ -13,7 +13,7 @@ app.add_url_rule('/', 'root', lambda: app.send_static_file('index.html'))
 CONFIG = {
     'client_id': 'ad842c2390844f0581e5b178c410741a',
     'client_secret': '9d94784498f5489db11f2281a5248dc6',
-    'redirect_uri': 'http://46.101.29.114:7000/#/handle_auth'
+    'redirect_uri': 'http://46.101.29.114:7000/post_auth'
 }
 instagram_client = InstagramAPI(**CONFIG)
 
@@ -46,6 +46,7 @@ def on_success():
         return "Missing code"
     try:
         access_token, user_info = instagram_client.exchange_code_for_access_token(code)
+        print(access_token)
         if not access_token:
             return "could not get access token"
         request.session['access_token'] = access_token
