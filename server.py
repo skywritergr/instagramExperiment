@@ -1,6 +1,5 @@
 import os
-# import json
-from flask import Flask, Response, request, jsonify, send_from_directory
+from flask import Flask, Response, request, jsonify, send_from_directory, redirect
 from instagram.client import InstagramAPI
 from server.instagram import instagram_user
 
@@ -11,7 +10,6 @@ app.config.update(
 app.add_url_rule('/', 'root', lambda: app.send_static_file('index.html'))
 
 
-
 CONFIG = {
     'client_id': 'ad842c2390844f0581e5b178c410741a',
     'client_secret': '9d94784498f5489db11f2281a5248dc6',
@@ -20,6 +18,7 @@ CONFIG = {
 instagram_client = InstagramAPI(**CONFIG)
 access_token = ""
 user = None
+
 
 @app.route('/handleauth')
 def handleauth():
@@ -55,13 +54,13 @@ def on_success():
     if not code:
         return "Missing code"
     try:
-        access_token, user_info = 
+        access_token, user_info =\
             instagram_client.exchange_code_for_access_token(code)
         if not access_token:
             return "could not get access token"
         access_token = access_token
         user = instagram_user(user_info)
-        return jsonify(access_token=access_token, user_info=user_info)
+        return redirect("http://46.101.29.114:7000/handleauth", code=302)
     except Exception as e:
         print(e)
         return jsonify(error=True)
