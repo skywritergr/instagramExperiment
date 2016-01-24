@@ -18,6 +18,7 @@ CONFIG = {
 instagram_client = InstagramAPI(**CONFIG)
 access_token = ""
 user = None
+api = None
 
 
 @app.route('/handleauth')
@@ -39,15 +40,6 @@ def auth_instagram():
         print(e)
 
 
-def get_nav():
-    nav_menu = ("<h1>Instagram Actions</h1>"
-                "<ul>"
-                "<li><a href='/likeHashtags'>Like a Hashtag</a></li>"
-                "<li><a href='/getPhotos'>Get Hashtag photos</a></li>"
-                "</ul>")
-    return nav_menu
-
-
 @app.route('/post_auth')
 def on_success():
     code = request.args.get("code")
@@ -60,6 +52,7 @@ def on_success():
             return "could not get access token"
         access_token = access_token
         user = instagram_user(user_info)
+        api = InstagramAPI(access_token=access_token, client_secret=CONFIG.client_secret)
         return redirect("http://46.101.29.114:7000/handleauth", code=302)
     except Exception as e:
         print(e)
@@ -68,7 +61,8 @@ def on_success():
 
 @app.route('/api/hashtag', methods=['GET'])
 def get_hashtags():
-    return Response('Hello World!')
+    hashtag = request.args.get("hashtag")
+    return Response(api.tag(hashtag))
 
 
 if __name__ == '__main__':

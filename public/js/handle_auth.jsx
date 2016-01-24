@@ -1,3 +1,5 @@
+import ActionBlock from './action_block'
+
 export default class HandleAuth extends React.Component {
     constructor(props){
         super(props);
@@ -9,6 +11,6 @@ export default class HandleAuth extends React.Component {
     }
     
     render(){
-        return (<div><h3>Handled!</h3></div>);
+        return (< ActionBlock link='/api/hashtag' text='Say Hello World!' />);
     }
 }

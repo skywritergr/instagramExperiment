@@ -6941,7 +6941,7 @@
 /* 105 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -6967,6 +6967,10 @@
 
 	var _inherits3 = _interopRequireDefault(_inherits2);
 
+	var _action_block = __webpack_require__(301);
+
+	var _action_block2 = _interopRequireDefault(_action_block);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var HandleAuth = function (_React$Component) {
@@ -6978,23 +6982,15 @@
 	    }
 
 	    (0, _createClass3.default)(HandleAuth, [{
-	        key: "componentDidMount",
+	        key: 'componentDidMount',
 	        value: function componentDidMount() {
 	            var code = this.props.location.query.code;
 	            console.log(code);
 	        }
 	    }, {
-	        key: "render",
+	        key: 'render',
 	        value: function render() {
-	            return React.createElement(
-	                "div",
-	                null,
-	                React.createElement(
-	                    "h3",
-	                    null,
-	                    "Handled!"
-	                )
-	            );
+	            return React.createElement(_action_block2.default, { link: '/api/hashtag', text: 'Say Hello World!' });
 	        }
 	    }]);
 	    return HandleAuth;
@@ -12407,6 +12403,77 @@
 	exports['default'] = createBrowserHistory;
 	module.exports = exports['default'];
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+
+/***/ },
+/* 298 */,
+/* 299 */,
+/* 300 */,
+/* 301 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _getPrototypeOf = __webpack_require__(52);
+
+	var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+
+	var _classCallCheck2 = __webpack_require__(64);
+
+	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+	var _createClass2 = __webpack_require__(65);
+
+	var _createClass3 = _interopRequireDefault(_createClass2);
+
+	var _possibleConstructorReturn2 = __webpack_require__(69);
+
+	var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+	var _inherits2 = __webpack_require__(94);
+
+	var _inherits3 = _interopRequireDefault(_inherits2);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var request = __webpack_require__(102);
+
+	var ActionBlock = function (_React$Component) {
+	    (0, _inherits3.default)(ActionBlock, _React$Component);
+
+	    function ActionBlock(props) {
+	        (0, _classCallCheck3.default)(this, ActionBlock);
+
+	        var _this = (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(ActionBlock).call(this, props));
+
+	        _this.callAPI = function () {
+	            var link = _this.props.link;
+
+	            request.get(link).end(function (err, res) {
+	                console.log(res);
+	            });
+	        };
+
+	        return _this;
+	    }
+
+	    (0, _createClass3.default)(ActionBlock, [{
+	        key: "render",
+	        value: function render() {
+	            return React.createElement(
+	                "div",
+	                { className: "actionBlock", onClick: this.callAPI },
+	                this.props.text
+	            );
+	        }
+	    }]);
+	    return ActionBlock;
+	}(React.Component);
+
+	exports.default = ActionBlock;
 
 /***/ }
 /******/ ]);
