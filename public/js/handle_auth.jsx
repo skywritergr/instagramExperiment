@@ -11,6 +11,6 @@ export default class HandleAuth extends React.Component {
     }
     
     render(){
-        return (< ActionBlock link='/api/hashtag' text='Say Hello World!' />);
+        return (< ActionBlock link='/api/hashtag?tag="nofilter"' text='Say Hello World!' />);
     }
 }

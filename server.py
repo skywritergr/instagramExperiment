@@ -52,7 +52,7 @@ def on_success():
             return "could not get access token"
         access_token = access_token
         user = instagram_user(user_info)
-        api = InstagramAPI(access_token=access_token, client_secret=CONFIG.client_secret)
+        api = InstagramAPI(access_token=access_token, client_secret=CONFIG['client_secret'])
         return redirect("http://46.101.29.114:7000/handleauth", code=302)
     except Exception as e:
         print(e)
