@@ -6990,7 +6990,7 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            return React.createElement(_action_block2.default, { link: '/api/hashtag', text: 'Say Hello World!' });
+	            return React.createElement(_action_block2.default, { link: '/api/hashtag?tag="nofilter"', text: 'Say Hello World!' });
 	        }
 	    }]);
 	    return HandleAuth;
