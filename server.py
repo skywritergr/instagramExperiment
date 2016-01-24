@@ -1,5 +1,5 @@
 import os
-from flask import Flask, Response, request, jsonify, send_from_directory, redirect
+from flask import Flask, request, jsonify, send_from_directory, redirect
 from instagram.client import InstagramAPI
 from server.instagram import instagram_user
 
@@ -16,9 +16,8 @@ CONFIG = {
     'redirect_uri': 'http://46.101.29.114:7000/post_auth'
 }
 instagram_client = InstagramAPI(**CONFIG)
-access_token = ""
 user = None
-api = None
+token = None
 
 
 @app.route('/handleauth')
@@ -34,7 +33,7 @@ def serve_node(filename):
 @app.route('/get_url')
 def auth_instagram():
     try:
-        url = instagram_client.get_authorize_url(scope=["likes", "comments"])
+        url = instagram_client.get_authorize_url(scope=["likes", "comments", "public_content"])
         return jsonify(url=url)
     except Exception as e:
         print(e)
@@ -50,9 +49,10 @@ def on_success():
             instagram_client.exchange_code_for_access_token(code)
         if not access_token:
             return "could not get access token"
-        access_token = access_token
+        global token
+        token = access_token
+        global user
         user = instagram_user(user_info)
-        api = InstagramAPI(access_token=access_token, client_secret=CONFIG['client_secret'])
         return redirect("http://46.101.29.114:7000/handleauth", code=302)
     except Exception as e:
         print(e)
@@ -61,8 +61,13 @@ def on_success():
 
 @app.route('/api/hashtag', methods=['GET'])
 def get_hashtags():
-    hashtag = request.args.get("hashtag")
-    return Response(api.tag(hashtag))
+    hashtag = request.args.get("tag")
+    print(hashtag)
+    api = InstagramAPI(access_token=token, client_secret=CONFIG['client_secret'])
+    result, next_tag = api.tag_search(q=hashtag)
+    print(result)
+    print(next_tag)
+    return jsonify(data=result)
 
 
 if __name__ == '__main__':
