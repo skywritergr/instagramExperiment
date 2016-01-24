@@ -1,7 +1,8 @@
 import os
 from flask import Flask, request, jsonify, send_from_directory, redirect
 from instagram.client import InstagramAPI
-from server.instagram import instagram_user
+from server.instagram_user import instagram_user
+from server.instagram_photo import instagram_photo
 
 app = Flask(__name__, static_url_path='', static_folder='public')
 app.config.update(
@@ -59,16 +60,55 @@ def on_success():
         return jsonify(error=True)
 
 
-@app.route('/api/hashtag', methods=['GET'])
-def get_hashtags():
-    hashtag = request.args.get("tag")
-    print(hashtag)
+def get_latest_photos(hashtag, num):
     api = InstagramAPI(access_token=token, client_secret=CONFIG['client_secret'])
     result, next_tag = api.tag_search(q=hashtag)
-    print(result)
-    print(next_tag)
-    return jsonify(data=result)
+    tag_recent_media, next = api.tag_recent_media(count=num, tag_name=tag_search[0].name)
+    photos = []
+    for tag_media in tag_recent_media:
+        instaphoto = instagram_photo(tag_media)
+        photos.append(instaphoto)
+    return photos
 
+
+@app.route('/api/likephotos', methods=['GET'])
+def like_photos():
+    # number = request.args.get("number")
+    hashtag = request.args.get("tag")
+    api = InstagramAPI(access_token=token, client_secret=CONFIG['client_secret'])
+    number = 15 #static number in the beggining. Later get it from the url
+    photos = get_latest_photos(hashtag, number)
+    for photo in photos:
+        api.like_media(photo['id'])
+        
+    return jsonify(success=True, liked=number)
+
+
+@app.route('/api/leavecomments', methods=['POST'])
+def comment_to_photos():
+    comment = request.form['comment']
+    hashtag = request.form['tag']
+    number = 15 #request.form['number']
+    api = InstagramAPI(access_token=token, client_secret=CONFIG['client_secret'])
+    photos = get_latest_photos(hashtag, number)
+    for photo in photos:
+        api.create_media_comment(photo['id'], comment)
+    return jsonify(success=True, commented=number)
+    
+    
+@app.route('/api/followusers', methods=['GET'])
+def follow_users():
+    hashtag = request.args.get("tag")
+    api = InstagramAPI(access_token=token, client_secret=CONFIG['client_secret'])
+    number = 15 #static number in the beggining. Later get it from the url
+    photos = get_latest_photos(hashtag, number)
+    followed = 0
+    for photo in photos:
+        api.follow_user(photo['user']['instagram_id'])
+        # check if the user is being followed already
+        # if not then follow and increment the counter
+        followed += 1
+    return jsonify(success=True, followed=followed)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 7000)))

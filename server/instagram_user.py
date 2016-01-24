@@ -5,7 +5,6 @@ class instagram_user(object):
     username = ""
 
     def __init__(self, user_info):
-        print(type(user_info))
         self.full_name = user_info['full_name']
         self.instagram_id = user_info['id']
         self.profile_picture = user_info['profile_picture']
