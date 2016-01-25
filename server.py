@@ -63,7 +63,7 @@ def on_success():
 def get_latest_photos(hashtag, num):
     api = InstagramAPI(access_token=token, client_secret=CONFIG['client_secret'])
     result, next_tag = api.tag_search(q=hashtag)
-    tag_recent_media, next = api.tag_recent_media(count=num, tag_name=tag_search[0].name)
+    tag_recent_media, next = api.tag_recent_media(count=num, tag_name=(tag_search[0].name if len(tag_search)>0 else hashtag))
     photos = []
     for tag_media in tag_recent_media:
         instaphoto = instagram_photo(tag_media)
