@@ -17,7 +17,6 @@ export default class ActionBlock extends React.Component {
         } else if(ajaxType==='POST'){
             request.post(link)
                 .send({tag: 'project365', comment: 'Cool! :)'})
-                .set('Accept', 'application/json')
                 .end(function(err, res){
                     console.log(res);
                 });

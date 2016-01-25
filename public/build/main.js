@@ -7239,7 +7239,7 @@
 	                    console.log(res);
 	                });
 	            } else if (ajaxType === 'POST') {
-	                request.post(link).send({ tag: 'project365', comment: 'Cool! :)' }).set('Accept', 'application/json').end(function (err, res) {
+	                request.post(link).send({ tag: 'project365', comment: 'Cool! :)' }).end(function (err, res) {
 	                    console.log(res);
 	                });
 	            }
