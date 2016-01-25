@@ -13,9 +13,9 @@ export default class HandleAuth extends React.Component {
     render(){
         return (
             <div>
-            <ActionBlock link='/api/likephotos?tag="nofilter"' text='Like 15 photos' />
-            <ActionBlock link='/api/leavecomments?tag="project365"&comment="Nice picture! :)"' text='Leave comment to 15 photos' />
-            <ActionBlock link='/api/followusers?tag="project365"' text="follow users!" />
+            <ActionBlock link='/api/likephotos?tag="nofilter"' type='GET' text='Like 15 photos' />
+            <ActionBlock link='/api/leavecomments' type='POST' text='Leave comment to 15 photos' />
+            <ActionBlock link='/api/followusers?tag="project365"' type='GET' text="follow users!" />
             </div>
             );
     }

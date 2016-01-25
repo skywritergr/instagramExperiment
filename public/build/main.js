@@ -7177,9 +7177,9 @@
 	            return React.createElement(
 	                'div',
 	                null,
-	                React.createElement(_action_block2.default, { link: '/api/likephotos?tag="nofilter"', text: 'Like 15 photos' }),
-	                React.createElement(_action_block2.default, { link: '/api/leavecomments?tag="project365"&comment="Nice picture! :)"', text: 'Leave comment to 15 photos' }),
-	                React.createElement(_action_block2.default, { link: '/api/followusers?tag="project365"', text: 'follow users!' })
+	                React.createElement(_action_block2.default, { link: '/api/likephotos?tag="nofilter"', type: 'GET', text: 'Like 15 photos' }),
+	                React.createElement(_action_block2.default, { link: '/api/leavecomments', type: 'POST', text: 'Leave comment to 15 photos' }),
+	                React.createElement(_action_block2.default, { link: '/api/followusers?tag="project365"', type: 'GET', text: 'follow users!' })
 	            );
 	        }
 	    }]);
@@ -7192,7 +7192,7 @@
 /* 107 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -7232,21 +7232,28 @@
 
 	        _this.callAPI = function () {
 	            var link = _this.props.link;
+	            var ajaxType = _this.props.type;
 
-	            request.get(link).end(function (err, res) {
-	                console.log(res);
-	            });
+	            if (ajaxType === 'GET') {
+	                request.get(link).end(function (err, res) {
+	                    console.log(res);
+	                });
+	            } else if (ajaxType === 'POST') {
+	                request.post(link).send({ tag: 'project365', comment: 'Cool! :)' }).set('Accept', 'application/json').end(function (err, res) {
+	                    console.log(res);
+	                });
+	            }
 	        };
 
 	        return _this;
 	    }
 
 	    (0, _createClass3.default)(ActionBlock, [{
-	        key: "render",
+	        key: 'render',
 	        value: function render() {
 	            return React.createElement(
-	                "div",
-	                { className: "actionBlock", onClick: this.callAPI },
+	                'div',
+	                { className: 'actionBlock', onClick: this.callAPI },
 	                this.props.text
 	            );
 	        }

@@ -7,11 +7,21 @@ export default class ActionBlock extends React.Component {
     
     callAPI = () => {
         const link = this.props.link;
+        const ajaxType = this.props.type;
         
-        request.get(link)
+        if(ajaxType==='GET'){
+            request.get(link)
             .end(function(err, res){
                 console.log(res);
-            });
+            });    
+        } else if(ajaxType==='POST'){
+            request.post(link)
+                .send({tag: 'project365', comment: 'Cool! :)'})
+                .set('Accept', 'application/json')
+                .end(function(err, res){
+                    console.log(res);
+                });
+        }
     };
     
     render(){
