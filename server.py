@@ -88,7 +88,7 @@ def like_photos():
 def comment_to_photos():
     comment = request.form['comment']
     hashtag = request.form['tag']
-    number = 15 #request.form['number']
+    number = 5 #request.form['number']
     api = InstagramAPI(access_token=token, client_secret=CONFIG['client_secret'])
     photos = get_latest_photos(hashtag, number)
     for photo in photos:
@@ -100,7 +100,7 @@ def comment_to_photos():
 def follow_users():
     hashtag = request.args.get("tag")
     api = InstagramAPI(access_token=token, client_secret=CONFIG['client_secret'])
-    number = 15 #static number in the beggining. Later get it from the url
+    number = 5 #static number in the beggining. Later get it from the url
     photos = get_latest_photos(hashtag, number)
     followed = 0
     for photo in photos:
