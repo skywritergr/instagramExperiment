@@ -16,7 +16,8 @@ export default class ActionBlock extends React.Component {
             });    
         } else if(ajaxType==='POST'){
             request.post(link)
-                .send({tag: 'project365', comment: 'Cool! :)'})
+                .set('Content-Type', 'application/json; charset=utf-8')
+                .send({tag: 'project365', comment: 'Cool'})
                 .end(function(err, res){
                     console.log(res);
                 });

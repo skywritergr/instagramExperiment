@@ -86,9 +86,10 @@ def like_photos():
 
 @app.route('/api/leavecomments', methods=['POST'])
 def comment_to_photos():
-    comment = request.form['comment']
-    hashtag = request.form['tag']
-    number = 5 #request.form['number']
+    content = request.get_json()
+    comment = content['comment']
+    hashtag = content['tag']
+    number = 5 #content['number']
     api = InstagramAPI(access_token=token, client_secret=CONFIG['client_secret'])
     photos = get_latest_photos(hashtag, number)
     for photo in photos:
