@@ -63,7 +63,7 @@ def on_success():
 def get_latest_photos(hashtag, num):
     api = InstagramAPI(access_token=token, client_secret=CONFIG['client_secret'])
     result, next_tag = api.tag_search(q=hashtag)
-    tag_recent_media, next = api.tag_recent_media(count=num, tag_name=(tag_search[0].name if len(tag_search)>0 else hashtag))
+    tag_recent_media, next = api.tag_recent_media(count=num, tag_name=(result[0].name if len(result) > 0 else hashtag))
     photos = []
     for tag_media in tag_recent_media:
         instaphoto = instagram_photo(tag_media)
@@ -76,11 +76,11 @@ def like_photos():
     # number = request.args.get("number")
     hashtag = request.args.get("tag")
     api = InstagramAPI(access_token=token, client_secret=CONFIG['client_secret'])
-    number = 15 #static number in the beggining. Later get it from the url
+    number = 15    # static number in the beggining. Later get it from the url
     photos = get_latest_photos(hashtag, number)
     for photo in photos:
         api.like_media(photo['id'])
-        
+
     return jsonify(success=True, liked=number)
 
 
@@ -89,14 +89,14 @@ def comment_to_photos():
     content = request.get_json()
     comment = content['comment']
     hashtag = content['tag']
-    number = 5 #content['number']
+    number = 5   # content['number']
     api = InstagramAPI(access_token=token, client_secret=CONFIG['client_secret'])
     photos = get_latest_photos(hashtag, number)
     for photo in photos:
-        api.create_media_comment(photo['id'], comment)
+        api.create_media_comment(photo.id, comment)
     return jsonify(success=True, commented=number)
-    
-    
+
+
 @app.route('/api/followusers', methods=['GET'])
 def follow_users():
     hashtag = request.args.get("tag")
