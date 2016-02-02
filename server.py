@@ -63,12 +63,7 @@ def on_success():
 def get_latest_photos(hashtag, num):
     api = InstagramAPI(access_token=token, client_secret=CONFIG['client_secret'])
     result, next_tag = api.tag_search(q=hashtag)
-    try:
-        tag_recent_media, next = api.tag_recent_media(count=num, tag_name=(result[0].name if len(result) > 0 else hashtag))
-    except Exception as e:
-        print("Oops! Something went wrong")
-        print(e)
-        return jsonify(error=True)
+    tag_recent_media, next = api.tag_recent_media(count=num, tag_name=(result[0].name if len(result) > 0 else hashtag))
     photos = []
     for tag_media in tag_recent_media:
         instaphoto = instagram_photo(tag_media)
@@ -82,7 +77,13 @@ def like_photos():
     hashtag = request.args.get("tag")
     api = InstagramAPI(access_token=token, client_secret=CONFIG['client_secret'])
     number = 15    # static number in the beggining. Later get it from the url
-    photos = get_latest_photos(hashtag, number)
+    try:
+        photos = get_latest_photos(hashtag, number)
+    except Exception as e:
+        print("Oops! Something went wrong!")
+        print(e)
+        return jsonify(success=False)
+        
     for photo in photos:
         api.like_media(photo['id'])
 
