@@ -57,7 +57,7 @@ def on_success():
         return redirect("http://46.101.29.114:7000/handleauth", code=302)
     except Exception as e:
         print(e)
-        return jsonify(error=True)
+        return jsonify(success=False)
 
 
 def get_latest_photos(hashtag, num):
@@ -108,7 +108,13 @@ def follow_users():
     hashtag = request.args.get("tag")
     api = InstagramAPI(access_token=token, client_secret=CONFIG['client_secret'])
     number = 5 #static number in the beggining. Later get it from the url
-    photos = get_latest_photos(hashtag, number)
+    try:
+        photos = get_latest_photos(hashtag, number)
+    except Exception as e:
+        print("Oops! Something went wrong")
+        print(e)
+        return jsonify(success=False)
+        
     followed = 0
     for photo in photos:
         api.follow_user(photo['user']['instagram_id'])
