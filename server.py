@@ -63,7 +63,12 @@ def on_success():
 def get_latest_photos(hashtag, num):
     api = InstagramAPI(access_token=token, client_secret=CONFIG['client_secret'])
     result, next_tag = api.tag_search(q=hashtag)
-    tag_recent_media, next = api.tag_recent_media(count=num, tag_name=(result[0].name if len(result) > 0 else hashtag))
+    try:
+        tag_recent_media, next = api.tag_recent_media(count=num, tag_name=(result[0].name if len(result) > 0 else hashtag))
+    except Exception as e:
+        print("Oops! Something went wrong")
+        print(e)
+        return jsonify(error=True)
     photos = []
     for tag_media in tag_recent_media:
         instaphoto = instagram_photo(tag_media)
