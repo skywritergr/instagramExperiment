@@ -82,7 +82,7 @@ def like_photos():
     except Exception as e:
         print("Oops! Something went wrong!")
         print(e)
-        return jsonify(success=False)
+        return redirect("http://46.101.29.114:7000/", code=302)
         
     for photo in photos:
         api.like_media(photo['id'])
@@ -97,7 +97,13 @@ def comment_to_photos():
     hashtag = content['tag']
     number = 5   # content['number']
     api = InstagramAPI(access_token=token, client_secret=CONFIG['client_secret'])
-    photos = get_latest_photos(hashtag, number)
+    try:
+        photos = get_latest_photos(hashtag, number)
+    except Exception as e:
+        print("Oops! Something went wrong!")
+        print(e)
+        return redirect("http://46.101.29.114:7000/", code=302)
+        
     for photo in photos:
         api.create_media_comment(photo.id, comment)
     return jsonify(success=True, commented=number)
@@ -113,7 +119,7 @@ def follow_users():
     except Exception as e:
         print("Oops! Something went wrong")
         print(e)
-        return jsonify(success=False)
+        return redirect("http://46.101.29.114:7000/", code=302)
         
     followed = 0
     for photo in photos:
